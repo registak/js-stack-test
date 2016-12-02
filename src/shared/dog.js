@@ -1,5 +1,7 @@
+// @flow
+
 class Dog {
-  constructor(name) {
+  constructor(name: string) {
     this.name = name;
   }
 
