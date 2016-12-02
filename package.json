@@ -11,10 +11,12 @@
   "license": "MIT",
   "dependencies": {
     "babel-polyfill": "^6.16.0",
+    "immutable": "^3.8.1",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
     "react-redux": "^4.4.6",
-    "redux": "^3.6.0"
+    "redux": "^3.6.0",
+    "redux-actions": "^1.1.0"
   },
   "devDependencies": {
     "babel-loader": "^6.2.8",
@@ -35,7 +37,8 @@
     "presets": [
       "latest",
       "react"
-    ]
+    ],
+    "compact": false
   },
   "eslintConfig": {
     "extends": "airbnb",
@@ -44,6 +47,17 @@
     ],
     "env": {
       "browser": true
+    },
+    "rules": {
+      "new-cap": [
+        2,
+        {
+          "capIsNewExceptions": [
+            "Map",
+            "List"
+          ]
+        }
+      ]
     }
   }
 }
