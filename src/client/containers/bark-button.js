@@ -7,4 +7,6 @@ const mapDispatchToProps = dispatch => ({
   actionLabel: 'Bark',
 });
 
+// 適切なactionsとdataを2つのcomponentsに伝えるためのコンcontainersを作る connect
+// ButtonとmakeBarkアクション、Reduxのdispatchメソッドを結びつける
 export default connect(null, mapDispatchToProps)(Button);

@@ -7,10 +7,12 @@ import { describe, it, beforeEach } from 'mocha';
 import dogReducer from '../../client/reducers/dog-reducer';
 import { makeBark } from '../../client/actions/dog-actions';
 
+// どんなオブジェクトに対してもshouldを呼び出せるようにする
 should();
+// ファイルの先頭で変数storeを宣言し、このファイル内での全てのテストで使えるようする
 let store;
-
-describe('App state', () => {
+// App State > Dog > makeBark
+describe('App State', () => {
   describe('Dog', () => {
     beforeEach(() => {
       store = createStore(combineReducers({

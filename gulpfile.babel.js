@@ -3,6 +3,8 @@
 import gulp from 'gulp';
 import babel from 'gulp-babel';
 import eslint from 'gulp-eslint';
+// Flowは静的型チェッカー。コード内の一貫性のない型を検出し、
+// アノテーションを使って明示的な型宣言を追加することができる
 import flow from 'gulp-flowtype';
 import mocha from 'gulp-mocha';
 import del from 'del';
@@ -11,6 +13,7 @@ import webpackConfig from './webpack.config.babel';
 
 const paths = {
   allSrcJs: 'src/**/*.js?(x)',
+  // .jsファイルと.jsxファイルにマッチするパターン
   serverSrcJs: 'src/server/**/*.js?(x)',
   sharedSrcJs: 'src/shared/**/*.js?(x)',
   clientEntryPoint: 'src/client/app.jsx',
@@ -31,6 +34,7 @@ gulp.task('lint', () =>
     .pipe(eslint())
     .pipe(eslint.format())
     .pipe(eslint.failAfterError())
+    // abortオプションはFlowが問題を検出した場合にGulpタスクを中断させる
     .pipe(flow({ abort: true })),
 );
 
@@ -49,7 +53,7 @@ gulp.task('test', ['build'], () =>
   gulp.src(paths.allLibTests)
     .pipe(mocha()),
 );
-
+// lint > build > test > main
 gulp.task('main', ['test'], () =>
   gulp.src(paths.clientEntryPoint)
     .pipe(webpack(webpackConfig))
