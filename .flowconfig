@@ -1,7 +1,3 @@
 [igonore]
 
 .*/node_modules/gulp-flowtype/.*
-
-
-
-

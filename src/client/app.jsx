@@ -1,3 +1,5 @@
+// @flow
+
 // Promiseなど最新のES仕様を使う
 import 'babel-polyfill';
 
