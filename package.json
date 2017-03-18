@@ -1,79 +1,55 @@
 {
-  "name": "js-stack",
+  "name": "js-stack-v2",
   "version": "1.0.0",
-  "description": "Modern Javascript Training",
-  "main": "index.js",
+  "licence": "MIT",
   "scripts": {
-    "test": "gulp test",
-    "start": "gulp"
+    "start": "yarn dev:start",
+    "dev:start": "nodemon -e js,jsx --ignore lib --ignore dist --exec babel-node src/server",
+    "dev:wds": "webpack-dev-server --progress",
+    "prod:build": "rimraf lib dist && babel src -d lib --ignore .test.js && cross-env NODE_ENV=production webpack -p --progress",
+    "prod:start": "cross-env NODE_ENV=production pm2 start lib/server && pm2 logs",
+    "prod:stop": "pm2 delete server",
+    "lint": "eslint src webpack.config.babel.js --ext .js,.jsx",
+    "test": "yarn lint && flow && jest --coverage",
+    "precommit": "yarn test",
+    "prepush": "yarn test && yarn prod:build"
   },
-  "author": "registak",
-  "license": "MIT",
+  "browserslist": [
+    "> 1%"
+  ],
   "dependencies": {
-    "babel-polyfill": "^6.16.0",
-    "immutable": "^3.8.1",
-    "react": "^15.4.1",
-    "react-dom": "^15.4.1",
-    "react-redux": "^4.4.6",
-    "redux": "^3.6.0",
-    "redux-actions": "^1.1.0",
-    "redux-immutable": "^3.0.8"
+    "babel-polyfill": "^6.23.0",
+    "compression": "^1.6.2",
+    "express": "^4.15.2",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-hot-loader": "next"
   },
   "devDependencies": {
+    "babel-cli": "^6.24.0",
+    "babel-core": "^6.24.0",
     "babel-eslint": "^7.1.1",
-    "babel-loader": "^6.2.8",
-    "babel-preset-flow": "^1.0.0",
-    "babel-preset-latest": "^6.16.0",
-    "babel-preset-react": "^6.16.0",
-    "chai": "^3.5.0",
-    "del": "^2.2.2",
-    "eslint": "^3.11.1",
-    "eslint-config-airbnb": "^13.0.0",
-    "eslint-plugin-flowtype": "^2.29.1",
+    "babel-jest": "^19.0.0",
+    "babel-loader": "^6.4.1",
+    "babel-plugin-flow-react-proptypes": "^0.21.0",
+    "babel-preset-env": "^1.2.2",
+    "babel-preset-flow": "^6.23.0",
+    "babel-preset-react": "^6.23.0",
+    "cross-env": "^3.2.4",
+    "eslint": "^3.15.0",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-compat": "^1.0.2",
+    "eslint-plugin-flowtype": "^2.30.3",
     "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-jsx-a11y": "^2.2.3",
-    "eslint-plugin-react": "^6.7.1",
-    "gulp": "^3.9.1",
-    "gulp-babel": "^6.1.2",
-    "gulp-eslint": "^3.0.1",
-    "gulp-flowtype": "^1.0.0",
-    "gulp-mocha": "^3.0.1",
-    "mocha": "^3.2.0",
-    "sinon": "^1.17.6",
-    "sinon-chai": "^2.8.0",
-    "webpack-stream": "^3.2.0"
-  },
-  "babel": {
-    "presets": [
-      "latest",
-      "react",
-      "flow"
-    ],
-    "compact": false
-  },
-  "eslintConfig": {
-    "extends": [
-      "airbnb",
-      "plugin:flowtype/recommended"
-    ],
-    "plugins": [
-      "import",
-      "flowtype"
-    ],
-    "parser": "babel-eslint",
-    "env": {
-      "browser": true
-    },
-    "rules": {
-      "new-cap": [
-        2,
-        {
-          "capIsNewExceptions": [
-            "Map",
-            "List"
-          ]
-        }
-      ]
-    }
+    "eslint-plugin-jsx-a11y": "^3.0.2 || ^4.0.0",
+    "eslint-plugin-react": "^6.9.0",
+    "flow-bin": "^0.42.0",
+    "husky": "^0.13.2",
+    "jest": "^19.0.2",
+    "nodemon": "^1.11.0",
+    "pm2": "^2.4.2",
+    "rimraf": "^2.6.1",
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^2.4.2"
   }
 }

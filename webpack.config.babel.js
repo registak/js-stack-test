@@ -1,23 +1,37 @@
+// @flow
+import webpack from 'webpack'
+import path from 'path'
+
+import { WDS_PORT } from './src/shared/config'
+import { isProd } from './src/shared/util'
+
 export default {
+  entry: [
+    'react-hot-loader/patch',
+    './src/client',
+  ],
   output: {
-    // 生成したいバンドルのファイル名
-    filename: 'client-bundle.js',
+    filename: 'js/bundle.js',
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: isProd ? '/static/' : `http://localhost:${WDS_PORT}/dist/`,
   },
-  // ソースマップを有効化
-  devtool: 'source-map',
   module: {
-    loaders: [
-      {
-        // .js,.jsxファイルの両方を扱う
-        test: /\.jsx?$/,
-        // Webpackでは、古い素のJavaScriptではないものを扱う場合
-        loader: 'babel-loader',
-        exclude: [/node_modules/],
-      },
+    rules: [
+      { test: /\.(js|jsx)$/, use: 'babel-loader', exclude: /node_modules/ },
     ],
   },
+  devtool: isProd ? false : 'source-map',
   resolve: {
-    // 拡張子なしでimportした場合、どのような種類のファイルをimportするべきかをWebpackに指定
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['.js', '.jsx'],
   },
-};
+  devServer: {
+    port: WDS_PORT,
+    hot: true,
+  },
+  plugins: [
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NamedModulesPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
+  ],
+}
